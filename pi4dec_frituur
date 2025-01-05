@@ -3,16 +3,18 @@
 use autodie;
 use JSON;
 
-sub hook_checkout($class, $cart, $user, $transaction_id, @) {
+sub hook_checkout_done($class, $cart, $user, $transaction_id, @) {
     my @entries = $cart->entries('product_id') or return;
-    my @verzameling; 
+    my @verzameling;
     for my $entry (@entries) {
-        $entry->{description} =~ /frituur/i or next;
+        my $product = $entry->attribute('product') or next;
+        my $frituur = $product->{tags}{frituur} or next;
         push @verzameling, {
             product_id  => $entry->attribute('product_id'),
             quantity    => $entry->quantity,
             description => $entry->{description},
-        }; 
+            temperature => $frituur,
+        };
     }
     @verzameling or return;
     my $json = encode_json {
