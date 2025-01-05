@@ -1,0 +1,31 @@
+#!perl
+
+use autodie;
+use JSON;
+
+sub hook_checkout($class, $cart, $user, $transaction_id, @) {
+    my @entries = $cart->entries('product_id') or return;
+    my @verzameling; 
+    for my $entry (@entries) {
+        $entry->{description} =~ /frituur/i or next;
+        push @verzameling, {
+            product_id  => $entry->attribute('product_id'),
+            quantity    => $entry->quantity,
+            description => $entry->{description},
+        }; 
+    }
+    @verzameling or return;
+    my $json = encode_json {
+        user => $user,
+        items => \@verzameling,
+    };
+    my $transmit_json = "\'" . $json . "\'"; 
+
+#    print $json;
+#    open my $pipe, '|-', 'ssh', 'rpc@10.33.1.13', '/home/rpc/generate_receipt/start.sh', $transmit_json;
+    open my $pipe, '|-', '/home/revbank/git/Frituur_Receipt_Generator/start.sh', $json;
+    local $/;
+    my $output = readline $pipe;
+    close $pipe;
+#    print $json ."\n";
+}
