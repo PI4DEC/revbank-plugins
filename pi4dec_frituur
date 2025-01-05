@@ -13,7 +13,7 @@ sub hook_checkout_done($class, $cart, $user, $transaction_id, @) {
             product_id  => $entry->attribute('product_id'),
             quantity    => $entry->quantity,
             description => $entry->{description},
-            temperature => $frituur,
+            frytime => $frituur,
         };
     }
     @verzameling or return;
