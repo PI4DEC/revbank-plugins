@@ -1,0 +1,23 @@
+{
+    "user": "TESTER",
+    "items": [
+      {
+        "quantity": 11,
+        "description": "Bitterballen 6 stuks",
+        "product_id": "bitterballen",
+        "frytime": "5"
+      },
+      {
+        "quantity": 8,
+        "description": "Frikandel",
+        "product_id": "frikandel",
+        "frytime": "4"
+      },
+      {
+        "quantity": 1,
+        "description": "Patat",
+        "product_id": "patat",
+        "frytime": "5"
+      }
+    ]
+  }
