@@ -108,12 +108,11 @@ def print_frituur_receipt():
     p.cut()
 
 if len(sys.argv)>1: #print accountname and firstname
-    print("\nIk stuur de frituurbestelling naar de printer!\n")
-    print(sys.argv)
     prepare_receipt(sys.argv[1])
     if debug:
         print("Debug enabled: Not printing!")
     else:
+        print("\nIk stuur de frituurbestelling naar de printer!\n")
         print_frituur_receipt()
 elif debug:
     print("\nDebug enabled, just testing, not printing\n")
